@@ -92,4 +92,3 @@ require (
 	gorm.io/gorm v1.31.1 // indirect
 )
 
-replace github.com/GoHyperrr/mdk => ../mdk
