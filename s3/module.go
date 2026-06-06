@@ -9,7 +9,7 @@ import (
 
 // Module implements the mdk.Module interface for S3/Cloud Storage.
 type Module struct {
-	provider ObjectStorage
+	provider mdk.ObjectStorage
 }
 
 // NewModule creates a new S3 Storage module.
@@ -58,7 +58,7 @@ func (m *Module) Shutdown(ctx context.Context) error {
 }
 
 // Provider returns the underlying storage provider.
-func (m *Module) Provider() ObjectStorage {
+func (m *Module) Provider() mdk.ObjectStorage {
 	return m.provider
 }
 
