@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout file-storage
+        uses: actions/checkout@v4
+      - name: Checkout mdk
+        uses: actions/checkout@v4
+        with:
+          repository: GoHyperrr/mdk
+          ref: ${{ github.head_ref || github.ref_name }}
+          path: mdk
+      - name: Move mdk to parent directory
+        run: mv mdk ../mdk
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.25'
+      - name: Initialize temporary go.work
+        run: |
+          go work init .
+          go work use . ../mdk
+      - run: go vet ./...
+      - run: go test -v -coverprofile=coverage.out ./...
+      - run: go build ./...
+      - name: Go Coverage Report
+        uses: ncruces/go-coverage-report@v0
+        with:
+          report: 'true'
+          chart: 'true'
+          amend: 'true'
+        continue-on-error: true

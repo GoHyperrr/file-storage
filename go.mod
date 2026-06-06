@@ -3,7 +3,7 @@ module github.com/GoHyperrr/file-storage
 go 1.25.5
 
 require (
-	github.com/GoHyperrr/mdk v0.0.0-20260605044506-3d2ab0d97ca9
+	github.com/GoHyperrr/mdk v0.2.0
 	gocloud.dev v0.45.0
 )
 
@@ -92,4 +92,3 @@ require (
 	gorm.io/gorm v1.31.1 // indirect
 )
 
-replace github.com/GoHyperrr/mdk => ../mdk
