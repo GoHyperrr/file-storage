@@ -6,6 +6,7 @@ import (
 	"io"
 	"mime"
 	"path/filepath"
+	"time"
 
 	"gocloud.dev/blob"
 	_ "gocloud.dev/blob/azureblob"
@@ -63,8 +64,17 @@ func (p *CloudProvider) Delete(ctx context.Context, path string) error {
 	return p.bucket.Delete(ctx, path)
 }
 
-func (p *CloudProvider) GetURL(ctx context.Context, path string) (string, error) {
-	return fmt.Sprintf("%s/%s", p.url, path), nil
+func (p *CloudProvider) GetURL(ctx context.Context, path string, expiry time.Duration) (string, error) {
+	opts := &blob.SignedURLOptions{
+		Expiry: expiry,
+		Method: "GET",
+	}
+	u, err := p.bucket.SignedURL(ctx, path, opts)
+	if err != nil {
+		// Fallback to public URL format if signed URL is not supported by driver (e.g. fileblob/memblob in tests)
+		return fmt.Sprintf("%s/%s", p.url, path), nil
+	}
+	return u, nil
 }
 
 func (p *CloudProvider) Close() error {

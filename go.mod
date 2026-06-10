@@ -1,6 +1,6 @@
 module github.com/GoHyperrr/file-storage
 
-go 1.25.5
+go 1.25
 
 require (
 	github.com/GoHyperrr/mdk v0.3.0
