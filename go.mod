@@ -3,7 +3,7 @@ module github.com/GoHyperrr/file-storage
 go 1.25.5
 
 require (
-	github.com/GoHyperrr/mdk v0.3.0
+	github.com/GoHyperrr/mdk v0.4.0
 	gocloud.dev v0.45.0
 )
 
